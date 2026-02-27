@@ -8,7 +8,7 @@ class VehicleRepo:
     def add_vehicle(self,vehicle):
         data = self.db.load()
         data["vehicles"].append(vehicle.__dict__)
-        self.db.sava(data)
+        self.db.save(data)
         
     def get_all(self):
         return self.db.load()["vehicles"]

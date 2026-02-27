@@ -12,7 +12,7 @@ class UserRepo:
     def find_user(self, username):
         data = self.db.load()
         for user in data["users"]:
-            if user["sername"] == username:
+            if user["username"] == username:
                 return user
         return None
     
