@@ -5,7 +5,7 @@ import os
 from database.user_repo import UserRepo
 from database.vehicle_repo import VehicleRepo
 from database.rental_repo import RentalRepo
-from services.auth_service import AuthService
+from services.Auth_service import AuthService
 from services.vehicle_service import VehicleService
 from services.rental_service import RentalService
 
