@@ -1,23 +1,30 @@
-from utils.hasher import hash_password, verify_password
 from models.user import User
 
 class AuthService:
     def __init__(self, user_repo):
         self.user_repo = user_repo
+        self.current_user = None
 
     def register(self, username, password, role='customer'):
-        if self.user_repo.find_user(username):
+        if self.user_repo.find_by_username(username):
             return False, "Username already exists."
-        password_hash = hash_password(password)
-        user = User(username, password_hash, role)
+        user = User(username, password, role)
         self.user_repo.add_user(user)
-        return True, "User registered successfully."
+        return True, f"User '{username}' registered successfully as {role}."
 
-    def authenticate(self, username, password):
-        user = self.user_repo.find_user(username)
-        if user and verify_password(password, user.password):
-            return user
-        return None
+    def login(self, username, password):
+        user = self.user_repo.find_by_username(username)
+        if user and user.password == password:
+            self.current_user = user
+            return True, f"Welcome, {user.username}!"
+        return False, "Invalid username or password."
 
-    def is_admin(self, user):
-        return user and user.role == 'admin'
+    def logout(self):
+        self.current_user = None
+        return "Logged out."
+
+    def get_current_user(self):
+        return self.current_user
+
+    def is_admin(self):
+        return self.current_user and self.current_user.role == 'admin'
