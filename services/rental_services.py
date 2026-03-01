@@ -50,7 +50,6 @@ class CarRentalService:
 
 
 # menu inside the file
-# if __name__ == "__main__":
 service = CarRentalService()
 
 while True:
